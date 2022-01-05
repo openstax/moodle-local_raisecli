@@ -33,7 +33,6 @@ require_once($CFG->libdir . '/externallib.php');
  * @copyright  2021 OpenStax
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class local_raisecli_external extends external_api {
     /**
      * Returns description of enable_self_enrolment_method() parameters
@@ -168,7 +167,7 @@ class local_raisecli_external extends external_api {
      * Get list of self enrolment methods for a course and role.
      *
      * @param int $courseid
-     * @param int $roleeid
+     * @param int $roleid
      * @return array of course self enrolment methods
      * @throws moodle_exception
      */
