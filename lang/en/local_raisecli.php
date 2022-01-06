@@ -24,3 +24,4 @@
 
 $string['pluginname'] = 'RAISE CLI';
 $string['pluginname_help'] = 'Web services that provide functionality required for the RAISE CLI tool';
+$string['privacy:metadata'] = 'RAISE CLI does not store any personal data';
