@@ -191,8 +191,8 @@ class local_raisecli_external extends external_api {
             'roleid' => $params['roleid'],
             'enrol' => 'self'
         );
-        $enrolinstances = $DB->get_records('enrol', $conditions, 'sortorder,id');
-        foreach ($enrolinstances as $enrolinstance) {
+        $rs = $DB->get_recordset('enrol', $conditions, 'sortorder,id', 'id, courseid, roleid, status');
+        foreach ($rs as $enrolinstance) {
             $result[] = array(
                 'id' => $enrolinstance->id,
                 'courseid' => $enrolinstance->courseid,
@@ -200,6 +200,7 @@ class local_raisecli_external extends external_api {
                 'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
             );
         }
+        $rs->close();
         return $result;
     }
 
