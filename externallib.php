@@ -105,7 +105,7 @@ class local_raisecli_external extends external_api {
     public static function get_role_by_shortname_parameters() {
         return new external_function_parameters(
             array(
-                'shortname' => new external_value(PARAM_TEXT, 'Role shortname')
+                'shortname' => new external_value(PARAM_ALPHANUM, 'Role shortname')
             )
         );
     }
@@ -143,8 +143,8 @@ class local_raisecli_external extends external_api {
         return new external_single_structure(
             array(
                 'id' => new external_value(PARAM_INT, 'id of role'),
-                'shortname' => new external_value(PARAM_TEXT, 'shortname of role'),
-                'archetype' => new external_value(PARAM_TEXT, 'archetype of role'),
+                'shortname' => new external_value(PARAM_ALPHANUM, 'shortname of role'),
+                'archetype' => new external_value(PARAM_ALPHANUM, 'archetype of role'),
             )
         );
     }
