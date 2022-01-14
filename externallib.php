@@ -65,7 +65,7 @@ class local_raisecli_external extends external_api {
             'id' => $params['enrolid'],
             'enrol' => 'self'
         );
-        $enrolinstance = $DB->get_record('enrol', $conditions, '*', MUST_EXIST);
+        $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid', MUST_EXIST);
 
         $context = context_course::instance($enrolinstance->courseid, MUST_EXIST);
         self::validate_context($context);
@@ -129,7 +129,7 @@ class local_raisecli_external extends external_api {
         require_capability('moodle/role:manage', $context);
 
         $conditions = array('shortname' => $params['shortname']);
-        $role = $DB->get_record('role', $conditions, '*', MUST_EXIST);
+        $role = $DB->get_record('role', $conditions, 'id, shortname, archetype', MUST_EXIST);
 
         return $role;
     }
@@ -254,7 +254,7 @@ class local_raisecli_external extends external_api {
             'id' => $params['enrolid'],
             'enrol' => 'self'
         );
-        $enrolinstance = $DB->get_record('enrol', $conditions, '*', MUST_EXIST);
+        $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid, status', MUST_EXIST);
 
         $context = context_course::instance($enrolinstance->courseid, MUST_EXIST);
         self::validate_context($context);
