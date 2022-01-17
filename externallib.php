@@ -22,7 +22,7 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
 
@@ -65,7 +65,7 @@ class local_raisecli_external extends external_api {
             'id' => $params['enrolid'],
             'enrol' => 'self'
         );
-        $enrolinstance = $DB->get_record('enrol', $conditions, '*', MUST_EXIST);
+        $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid', MUST_EXIST);
 
         $context = context_course::instance($enrolinstance->courseid, MUST_EXIST);
         self::validate_context($context);
@@ -105,7 +105,7 @@ class local_raisecli_external extends external_api {
     public static function get_role_by_shortname_parameters() {
         return new external_function_parameters(
             array(
-                'shortname' => new external_value(PARAM_TEXT, 'Role shortname')
+                'shortname' => new external_value(PARAM_ALPHANUM, 'Role shortname')
             )
         );
     }
@@ -129,7 +129,7 @@ class local_raisecli_external extends external_api {
         require_capability('moodle/role:manage', $context);
 
         $conditions = array('shortname' => $params['shortname']);
-        $role = $DB->get_record('role', $conditions, '*', MUST_EXIST);
+        $role = $DB->get_record('role', $conditions, 'id, shortname, archetype', MUST_EXIST);
 
         return $role;
     }
@@ -143,8 +143,8 @@ class local_raisecli_external extends external_api {
         return new external_single_structure(
             array(
                 'id' => new external_value(PARAM_INT, 'id of role'),
-                'shortname' => new external_value(PARAM_TEXT, 'shortname of role'),
-                'archetype' => new external_value(PARAM_TEXT, 'archetype of role'),
+                'shortname' => new external_value(PARAM_ALPHANUM, 'shortname of role'),
+                'archetype' => new external_value(PARAM_ALPHANUM, 'archetype of role'),
             )
         );
     }
@@ -191,8 +191,8 @@ class local_raisecli_external extends external_api {
             'roleid' => $params['roleid'],
             'enrol' => 'self'
         );
-        $enrolinstances = $DB->get_records('enrol', $conditions, 'sortorder,id');
-        foreach ($enrolinstances as $enrolinstance) {
+        $rs = $DB->get_recordset('enrol', $conditions, 'sortorder,id', 'id, courseid, roleid, status');
+        foreach ($rs as $enrolinstance) {
             $result[] = array(
                 'id' => $enrolinstance->id,
                 'courseid' => $enrolinstance->courseid,
@@ -200,6 +200,7 @@ class local_raisecli_external extends external_api {
                 'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
             );
         }
+        $rs->close();
         return $result;
     }
 
@@ -254,7 +255,7 @@ class local_raisecli_external extends external_api {
             'id' => $params['enrolid'],
             'enrol' => 'self'
         );
-        $enrolinstance = $DB->get_record('enrol', $conditions, '*', MUST_EXIST);
+        $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid, status', MUST_EXIST);
 
         $context = context_course::instance($enrolinstance->courseid, MUST_EXIST);
         self::validate_context($context);
