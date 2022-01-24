@@ -29,6 +29,7 @@ $services = array(
         'enabled' => 0,
         'shortname' => 'local_raisecli_service',
         'functions' => array(
+            'core_course_import_course',
             'core_course_duplicate_course',
             'core_course_get_courses',
             'core_user_create_users',
