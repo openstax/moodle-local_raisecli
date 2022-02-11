@@ -35,6 +35,7 @@ $services = array(
             'core_user_create_users',
             'core_user_get_users',
             'enrol_manual_enrol_users',
+            'gradereport_user_get_grade_items',
             'local_raisecli_enable_self_enrolment_method',
             'local_raisecli_get_role_by_shortname',
             'local_raisecli_get_self_enrolment_methods',
