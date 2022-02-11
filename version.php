@@ -25,4 +25,4 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_raisecli';
-$plugin->version  = 2022012400;
+$plugin->version  = 2022021100;
