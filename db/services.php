@@ -40,7 +40,8 @@ $services = array(
             'local_raisecli_enable_self_enrolment_method',
             'local_raisecli_get_role_by_shortname',
             'local_raisecli_get_self_enrolment_methods',
-            'local_raisecli_set_self_enrolment_method_key'
+            'local_raisecli_set_self_enrolment_method_key',
+            'local_raisecli_get_user_uuids'
         )
     )
 );
@@ -74,4 +75,10 @@ $functions = array(
         'type'         => 'write',
         'capabilities' => 'enrol/self:config'
     ),
+    'local_raisecli_get_user_uuids' => array(
+        'classname'    => 'local_raisecli_external',
+        'methodname'   => 'get_user_uuids',
+        'description'  => 'Get the uuids associated with a series of user ids',
+        'type'         => 'read',
+    )
 );

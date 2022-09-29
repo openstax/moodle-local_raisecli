@@ -286,4 +286,55 @@ class local_raisecli_external extends external_api {
             )
         );
     }
+
+    /**
+     * Returns description of method parameters
+     * @return external_function_parameters
+     */
+    public static function get_user_uuids_parameters() {
+        return new external_function_parameters(
+            array(
+                'user_ids' => new external_multiple_structure(
+                    new external_single_structure(
+                        array(
+                            'id' => new external_value(PARAM_INT, VALUE_OPTIONAL, 'user id'),
+                        )
+                    ), 'User IDs requested', VALUE_DEFAULT, array()
+                ) 
+            )
+        );
+    }
+
+    /**
+     * Get the uuids associated with the given user ids.
+     * @param array series of user ids or none (return all uuid mappings)
+     * @return array list of objects with userids and uuids 
+     */
+    public static function get_user_uuids($user_ids) {
+        
+        $params = self::validate_parameters(
+            self::get_user_uuids_parameters(),
+            array('user_ids'=>$user_ids)
+        );
+
+        $data = \local_raisecli\user_table_helper::get_user_table_entries($user_ids);
+
+        return $data;
+    }
+
+    /**
+     * Returns description of get_user_uuids() result value
+     *
+     * @return external_description
+     */
+    public static function get_user_uuids_returns() {
+        return new external_multiple_structure(
+            new external_single_structure(
+                array(
+                    'user_id' => new external_value(PARAM_INT, 'user_id value'),
+                    'user_uuid' => new external_value(PARAM_TEXT, 'user uuid value'),
+                )
+            )
+        );
+    }
 }
