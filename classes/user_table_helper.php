@@ -30,14 +30,14 @@ namespace local_raisecli;
  */
 class user_table_helper {
 
-    public static function get_user_table_entries($user_ids) {
+    public static function get_user_table_entries($userids) {
         global $USER, $DB;
 
-        if(count($user_ids) == 0){
+        if(count($userids) == 0) {
             $records = $DB->get_records('local_raise_user', array(), '', 'user_id, user_uuid');
             return $records;
         } else {
-            $selector = implode(", ", array_column($user_ids, 'id'));
+            $selector = implode(", ", array_column($userids, 'id'));
             $records = $DB->get_records_select(
                 'local_raise_user',
                 "user_id IN ({$selector})"
