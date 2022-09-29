@@ -18,6 +18,8 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
+use local_raise_external;
+
 require_once($CFG->dirroot . '/webservice/tests/helpers.php');
 require_once($CFG->dirroot . '/local/raisecli/externallib.php');
 
@@ -204,5 +206,58 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
 
         $this->expectException(required_capability_exception::class);
         local_raisecli_external::set_self_enrolment_method_key($enrolinstance->id, 'enrolkey123');
+    }
+
+    /**
+     * Test local_raisecli_get_user_uuids
+     */
+    public function test_local_raisecli_get_user_uuids() {
+        global $DB;
+
+        $this->resetAfterTest(true);
+        $course = $this->getDataGenerator()->create_course();
+        $user1 = $this->getDataGenerator()->create_user();
+        $user2 = $this->getDataGenerator()->create_user();
+        $user3 = $this->getDataGenerator()->create_user();
+
+        $this->setUser($user1);
+        $user1data = local_raise_external::get_raise_user();
+        $this->setUser($user2);
+        $user2data = local_raise_external::get_raise_user();
+        $this->setUser($user3);
+        $user3data = local_raise_external::get_raise_user();
+
+        $params = array(
+            'user_ids' => array(
+                'id' => $user1->id
+            )
+        );
+
+        $result = local_raisecli_external::get_user_uuids($params);
+        $result = external_api::clean_returnvalue(local_raisecli_external::get_user_uuids_returns(), $result);
+
+        $this->assertEquals($result[0]['user_uuid'], $user1data['uuid']);
+        $this->assertEquals(count($result), 1);
+
+        $params = array(
+        );
+
+        $result = local_raisecli_external::get_user_uuids($params);
+        $result = external_api::clean_returnvalue(local_raisecli_external::get_user_uuids_returns(), $result);
+
+        $this->assertEquals(count($result), 3);
+        foreach ($result as $item) {
+            $userid = $item['user_id'];
+            $uuid = $item['user_uuid'];
+            if ($userid == $user1->id) {
+                $this->assertEquals($uuid, $user1data['uuid']);
+            } else if ($userid == $user2->id) {
+                $this->assertEquals($uuid, $user2data['uuid']);
+            } else if ($userid == $user3->id) {
+                $this->assertEquals($uuid, $user3data['uuid']);
+            } else {
+                $this->assertEquals(true, false);
+            };
+        };
     }
 }
