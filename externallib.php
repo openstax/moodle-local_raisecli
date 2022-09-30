@@ -297,9 +297,12 @@ class local_raisecli_external extends external_api {
                 'user_ids' => new external_multiple_structure(
                     new external_single_structure(
                         array(
-                            'id' => new external_value(PARAM_INT, VALUE_OPTIONAL, 'user id'),
+                            'id' => new external_value(PARAM_INT, 'user id'),
                         )
-                    ), 'User IDs requested', VALUE_DEFAULT, array()
+                    ),
+                    'User IDs requested',
+                    VALUE_DEFAULT,
+                    array()
                 )
             )
         );
@@ -311,14 +314,30 @@ class local_raisecli_external extends external_api {
      * @return array list of objects with userids and uuids
      */
     public static function get_user_uuids($userids) {
+        global $DB;
 
         $params = self::validate_parameters(
             self::get_user_uuids_parameters(),
             array('user_ids' => $userids)
         );
 
-        $data = \local_raisecli\user_table_helper::get_user_table_entries($userids);
+        if (count($userids) == 0) {
+            $records = $DB->get_recordset('local_raise_user', array(), '', 'user_id, user_uuid');
+        } else {
+            $selector = implode(", ", array_column($userids, 'id'));
+            $records = $DB->get_recordset_select(
+                'local_raise_user',
+                "user_id IN ({$selector})"
+            );
+        };
 
+        $data = array();
+        while ($records->valid()) {
+            $value = $records->current();
+            unset($value->id);
+            array_push($data, $value);
+            $records->next();
+        };
         return $data;
     }
 
