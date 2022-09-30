@@ -310,7 +310,7 @@ class local_raisecli_external extends external_api {
 
     /**
      * Get the uuids associated with the given user ids.
-     * @param array series of user ids or none (return all uuid mappings)
+     * @param array $userids
      * @return array list of objects with userids and uuids
      * @throws moodle_exception
      */
