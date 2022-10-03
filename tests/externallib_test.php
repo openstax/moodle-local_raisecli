@@ -18,8 +18,6 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-use local_raise_external;
-
 require_once($CFG->dirroot . '/webservice/tests/helpers.php');
 require_once($CFG->dirroot . '/local/raisecli/externallib.php');
 
