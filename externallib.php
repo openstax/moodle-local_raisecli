@@ -323,22 +323,23 @@ class local_raisecli_external extends external_api {
         );
 
         if (count($userids) == 0) {
-            $records = $DB->get_recordset('local_raise_user', array(), '', 'user_id, user_uuid');
+            $rs = $DB->get_recordset('local_raise_user', array(), '', 'user_id, user_uuid');
         } else {
             $selector = implode(", ", array_column($userids, 'id'));
-            $records = $DB->get_recordset_select(
+            $rs = $DB->get_recordset_select(
                 'local_raise_user',
                 "user_id IN ({$selector})"
             );
         };
 
         $data = array();
-        while ($records->valid()) {
-            $value = $records->current();
-            unset($value->id);
-            array_push($data, $value);
-            $records->next();
+        foreach ($rs as $item) {
+            $data[] = array(
+                'user_id' => $item->user_id,
+                'user_uuid' => $item->user_uuid
+            );
         };
+        $rs->close();
         return $data;
     }
 
