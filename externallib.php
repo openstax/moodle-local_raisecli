@@ -286,4 +286,76 @@ class local_raisecli_external extends external_api {
             )
         );
     }
+
+    /**
+     * Returns description of method parameters
+     * @return external_function_parameters
+     */
+    public static function get_user_uuids_parameters() {
+        return new external_function_parameters(
+            array(
+                'user_ids' => new external_multiple_structure(
+                    new external_single_structure(
+                        array(
+                            'id' => new external_value(PARAM_INT, 'user id'),
+                        )
+                    ),
+                    'User IDs requested',
+                    VALUE_DEFAULT,
+                    array()
+                )
+            )
+        );
+    }
+
+    /**
+     * Get the uuids associated with the given user ids.
+     * @param array $userids
+     * @return array list of objects with userids and uuids
+     * @throws moodle_exception
+     */
+    public static function get_user_uuids($userids) {
+        global $DB;
+
+        $params = self::validate_parameters(
+            self::get_user_uuids_parameters(),
+            array('user_ids' => $userids)
+        );
+
+        if (count($userids) == 0) {
+            $rs = $DB->get_recordset('local_raise_user', array(), '', 'user_id, user_uuid');
+        } else {
+            $selector = implode(", ", array_column($userids, 'id'));
+            $rs = $DB->get_recordset_select(
+                'local_raise_user',
+                "user_id IN ({$selector})"
+            );
+        };
+
+        $data = array();
+        foreach ($rs as $item) {
+            $data[] = array(
+                'user_id' => $item->user_id,
+                'user_uuid' => $item->user_uuid
+            );
+        };
+        $rs->close();
+        return $data;
+    }
+
+    /**
+     * Returns description of get_user_uuids() result value
+     *
+     * @return external_description
+     */
+    public static function get_user_uuids_returns() {
+        return new external_multiple_structure(
+            new external_single_structure(
+                array(
+                    'user_id' => new external_value(PARAM_INT, 'user_id value'),
+                    'user_uuid' => new external_value(PARAM_TEXT, 'user uuid value'),
+                )
+            )
+        );
+    }
 }
