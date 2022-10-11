@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/local/raisecli/component/external/set_self_enrolm
  */
 class local_set_self_enrolment_method_key_external extends external_api {
 
-/**
+    /**
      * Returns description of set_self_enrolment_method_key() parameters
      *
      * @return external_function_parameters

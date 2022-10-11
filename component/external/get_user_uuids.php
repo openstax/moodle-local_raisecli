@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/local/raisecli/component/external/get_user_uuids.
  */
 class local_get_user_uuids_external extends external_api {
 
-/**
+    /**
      * Returns description of method parameters
      * @return external_function_parameters
      */
