@@ -48,37 +48,42 @@ $services = array(
 
 $functions = array(
     'local_raisecli_enable_self_enrolment_method' => array(
-        'classname'    => 'local_raisecli_external',
+        'classname'    => 'local_enable_self_enrolment_method_external',
         'methodname'   => 'enable_self_enrolment_method',
         'description'  => 'Enable self enrolment method',
+        'classpath'    => 'local/raisecli/component/external/enable_self_enrolment_method.php',
         'type'         => 'write',
         'capabilities' => 'enrol/self:config'
     ),
     'local_raisecli_get_role_by_shortname' => array(
-        'classname'    => 'local_raisecli_external',
+        'classname'    => 'local_get_role_by_shortname_external',
         'methodname'   => 'get_role_by_shortname',
         'description'  => 'Get role information by shortname',
+        'classpath'    => 'local/raisecli/component/external/get_role_by_shortname.php',
         'type'         => 'read',
         'capabilities' => 'moodle/role:manage'
     ),
     'local_raisecli_get_self_enrolment_methods' => array(
-        'classname'    => 'local_raisecli_external',
+        'classname'    => 'local_get_self_enrolment_methods_external',
         'methodname'   => 'get_self_enrolment_methods',
         'description'  => 'Return self-enrolment methods for a course and role',
+        'classpath'    => 'local/raisecli/component/external/get_self_enrolment_methods.php',
         'type'         => 'read',
         'capabilities' => ''
     ),
     'local_raisecli_set_self_enrolment_method_key' => array(
-        'classname'    => 'local_raisecli_external',
+        'classname'    => 'local_set_self_enrolment_method_key_external',
         'methodname'   => 'set_self_enrolment_method_key',
         'description'  => 'Set key for self enrolment method',
+        'classpath'    => 'local/raisecli/component/external/set_self_enrolment_method_key.php',
         'type'         => 'write',
         'capabilities' => 'enrol/self:config'
     ),
     'local_raisecli_get_user_uuids' => array(
-        'classname'    => 'local_raisecli_external',
+        'classname'    => 'local_get_user_uuids_external',
         'methodname'   => 'get_user_uuids',
         'description'  => 'Get the uuids associated with a series of user ids',
+        'classpath'    => 'local/raisecli/component/external/get_user_uuids.php',
         'type'         => 'read',
     )
 );
