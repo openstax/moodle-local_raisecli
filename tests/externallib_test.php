@@ -19,7 +19,11 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 
 require_once($CFG->dirroot . '/webservice/tests/helpers.php');
-require_once($CFG->dirroot . '/local/raisecli/externallib.php');
+require_once($CFG->dirroot . '/local/raisecli/component/external/enable_self_enrolment_method.php');
+require_once($CFG->dirroot . '/local/raisecli/component/external/get_role_by_shortname.php');
+require_once($CFG->dirroot . '/local/raisecli/component/external/get_self_enrolment_methods.php');
+require_once($CFG->dirroot . '/local/raisecli/component/external/get_user_uuids.php');
+require_once($CFG->dirroot . '/local/raisecli/component/external/set_self_enrolment_method_key.php');
 
 /**
  * RAISE CLI Web Service tests
@@ -53,8 +57,8 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
         $enrolinstance->status = ENROL_INSTANCE_DISABLED;
         $DB->update_record('enrol', $enrolinstance);
 
-        $result = local_raisecli_external::enable_self_enrolment_method($enrolinstance->id);
-        $result = external_api::clean_returnvalue(local_raisecli_external::enable_self_enrolment_method_returns(), $result);
+        $result = local_enable_self_enrolment_method_external::enable_self_enrolment_method($enrolinstance->id);
+        $result = external_api::clean_returnvalue(local_enable_self_enrolment_method_external::enable_self_enrolment_method_returns(), $result);
 
         $this->assertEquals($result['courseid'], $course->id);
         $this->assertEquals($result['id'], $enrolinstance->id);
@@ -84,7 +88,7 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id', MUST_EXIST);
 
         $this->expectException(required_capability_exception::class);
-        $result = local_raisecli_external::enable_self_enrolment_method($enrolinstance->id);
+        $result = local_enable_self_enrolment_method_external::enable_self_enrolment_method($enrolinstance->id);
     }
 
     /**
@@ -103,8 +107,8 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
 
         $role = $role = $DB->get_record('role', ['id' => $roleid], 'id, shortname, archetype', MUST_EXIST);
 
-        $result = local_raisecli_external::get_role_by_shortname($role->shortname);
-        $result = external_api::clean_returnvalue(local_raisecli_external::get_role_by_shortname_returns(), $result);
+        $result = local_get_role_by_shortname_external::get_role_by_shortname($role->shortname);
+        $result = external_api::clean_returnvalue(local_get_role_by_shortname_external::get_role_by_shortname_returns(), $result);
 
         $this->assertEquals($result['id'], $role->id);
         $this->assertEquals($result['shortname'], $role->shortname);
@@ -123,7 +127,7 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
         $this->setUser($user);
 
         $this->expectException(required_capability_exception::class);
-        $result = local_raisecli_external::get_role_by_shortname('student');
+        $result = local_get_role_by_shortname_external::get_role_by_shortname('student');
     }
 
     /**
@@ -142,8 +146,8 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid, status', MUST_EXIST);
 
-        $result = local_raisecli_external::get_self_enrolment_methods($enrolinstance->courseid, $enrolinstance->roleid);
-        $result = external_api::clean_returnvalue(local_raisecli_external::get_self_enrolment_methods_returns(), $result);
+        $result = local_get_self_enrolment_methods_external::get_self_enrolment_methods($enrolinstance->courseid, $enrolinstance->roleid);
+        $result = external_api::clean_returnvalue(local_get_self_enrolment_methods_external::get_self_enrolment_methods_returns(), $result);
 
         $this->assertEquals(count($result), 1);
         $this->assertEquals($result[0]['id'], $enrolinstance->id);
@@ -172,8 +176,8 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, status', MUST_EXIST);
 
         $enrolkey = 'enrolkey123.,;:!?_-+/*@#&$';
-        $result = local_raisecli_external::set_self_enrolment_method_key($enrolinstance->id, $enrolkey);
-        $result = external_api::clean_returnvalue(local_raisecli_external::set_self_enrolment_method_key_returns(), $result);
+        $result = local_set_self_enrolment_method_key_external::set_self_enrolment_method_key($enrolinstance->id, $enrolkey);
+        $result = external_api::clean_returnvalue(local_set_self_enrolment_method_key_external::set_self_enrolment_method_key_returns(), $result);
 
         $this->assertEquals($result['courseid'], $course->id);
         $this->assertEquals($result['id'], $enrolinstance->id);
@@ -203,7 +207,7 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id', MUST_EXIST);
 
         $this->expectException(required_capability_exception::class);
-        local_raisecli_external::set_self_enrolment_method_key($enrolinstance->id, 'enrolkey123');
+        local_set_self_enrolment_method_key_external::set_self_enrolment_method_key($enrolinstance->id, 'enrolkey123');
     }
 
     /**
@@ -236,8 +240,8 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
             )
         );
 
-        $result = local_raisecli_external::get_user_uuids($params);
-        $result = external_api::clean_returnvalue(local_raisecli_external::get_user_uuids_returns(), $result);
+        $result = local_get_user_uuids_external::get_user_uuids($params);
+        $result = external_api::clean_returnvalue(local_get_user_uuids_external::get_user_uuids_returns(), $result);
 
         $this->assertEquals($result[0]['user_uuid'], $user1['user_uuid']);
         $this->assertEquals(count($result), 1);
@@ -245,8 +249,8 @@ class local_raisecli_externallib_testcase extends externallib_advanced_testcase 
         $params = array(
         );
 
-        $result = local_raisecli_external::get_user_uuids($params);
-        $result = external_api::clean_returnvalue(local_raisecli_external::get_user_uuids_returns(), $result);
+        $result = local_get_user_uuids_external::get_user_uuids($params);
+        $result = external_api::clean_returnvalue(local_get_user_uuids_external::get_user_uuids_returns(), $result);
 
         $this->assertEquals(count($result), 3);
         foreach ($result as $item) {
