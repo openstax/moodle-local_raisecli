@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+namespace local_raisecli\external;
 
 /**
  * RAISE CLI Web Service Function - get_user_uuids
@@ -23,17 +24,14 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->libdir . '/externallib.php');
+use external_api;
+use external_function_parameters;
+use external_multiple_structure;
+use external_value;
+use external_single_structure;
 
-require_once($CFG->dirroot . '/local/raisecli/component/external/get_user_uuids.php');
-
-/**
- * RAISE CLI Web Service - get_user_uuids
- *
- * @package    local_raisecli
- * @copyright  2022 OpenStax
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class local_get_user_uuids_external extends external_api {
+class uuid extends external_api {
 
     /**
      * Returns description of method parameters

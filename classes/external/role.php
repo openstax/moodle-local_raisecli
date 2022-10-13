@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+namespace local_raisecli\external;
 
 /**
  * RAISE CLI Web Service Function - get_role_by_shortname
@@ -23,17 +24,13 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->libdir . '/externallib.php');
+use external_api;
+use external_function_parameters;
+use external_value;
+use external_single_structure;
 
-require_once($CFG->dirroot . '/local/raisecli/component/external/get_role_by_shortname.php');
-
-/**
- * RAISE CLI Web Service - get_role_by_shortname
- *
- * @package    local_raisecli
- * @copyright  2022 OpenStax
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class local_get_role_by_shortname_external extends external_api {
+class role extends external_api {
 
     /**
      * Returns description of get_role_by_shortname() parameters
