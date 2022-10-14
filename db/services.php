@@ -76,7 +76,7 @@ $functions = array(
         'capabilities' => 'enrol/self:config'
     ),
     'local_raisecli_get_user_uuids' => array(
-        'classname'    => 'uuid',
+        'classname'    => 'user',
         'methodname'   => 'get_user_uuids',
         'description'  => 'Get the uuids associated with a series of user ids',
         'type'         => 'read',

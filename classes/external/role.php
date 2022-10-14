@@ -59,7 +59,7 @@ class role extends external_api {
             self::get_role_by_shortname_parameters(),
             array('shortname' => $shortname)
         );
-        $context = context_system::instance();
+        $context = \context_system::instance();
         self::validate_context($context);
         require_capability('moodle/role:manage', $context);
 

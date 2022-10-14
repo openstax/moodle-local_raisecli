@@ -13,16 +13,16 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+namespace local_raisecli;
+
 use \local_raisecli\external\role;
 use externallib_advanced_testcase;
-use context_system;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-// require_once($CFG->dirroot . '/webservice/tests/helpers.php');
-require_once($CFG->libdir . '/externallib.php');
+require_once($CFG->dirroot . '/webservice/tests/helpers.php');
 
 /**
  * RAISE CLI Web Service tests
@@ -43,7 +43,7 @@ class role_test extends externallib_advanced_testcase {
         $roleid = $this->getDataGenerator()->create_role(array('shortname' => 'roleshortname'));
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
-        $context = context_system::instance();
+        $context = \context_system::instance();
         $this->assignUserCapability('moodle/role:manage', $context->id);
 
         $role = $role = $DB->get_record('role', ['id' => $roleid], 'id, shortname, archetype', MUST_EXIST);
@@ -67,7 +67,7 @@ class role_test extends externallib_advanced_testcase {
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
 
-        $this->expectException(required_capability_exception::class);
+        $this->expectException(\required_capability_exception::class);
         $result = role::get_role_by_shortname('student');
     }
 }

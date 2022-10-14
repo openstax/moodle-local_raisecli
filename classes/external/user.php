@@ -31,7 +31,7 @@ use external_multiple_structure;
 use external_value;
 use external_single_structure;
 
-class uuid extends external_api {
+class user extends external_api {
 
     /**
      * Returns description of method parameters

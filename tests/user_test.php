@@ -13,14 +13,16 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
-use \local_raisecli\external\uuid;
+namespace local_raisecli;
+
+use \local_raisecli\external\user;
+use externallib_advanced_testcase;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
 require_once($CFG->dirroot . '/webservice/tests/helpers.php');
-require_once($CFG->libdir . '/externallib.php');
 
 /**
  * RAISE CLI Web Service tests
@@ -29,7 +31,7 @@ require_once($CFG->libdir . '/externallib.php');
  * @copyright   2022 OpenStax
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class uuid_test extends externallib_advanced_testcase {
+class user_test extends externallib_advanced_testcase {
     /**
      * Test local_raisecli_get_user_uuids
      */
@@ -60,8 +62,8 @@ class uuid_test extends externallib_advanced_testcase {
             )
         );
 
-        $result = uuid::get_user_uuids($params);
-        $result = \external_api::clean_returnvalue(uuid::get_user_uuids_returns(), $result);
+        $result = user::get_user_uuids($params);
+        $result = \external_api::clean_returnvalue(user::get_user_uuids_returns(), $result);
 
         $this->assertEquals($result[0]['user_uuid'], $user1['user_uuid']);
         $this->assertEquals(count($result), 1);
@@ -69,8 +71,8 @@ class uuid_test extends externallib_advanced_testcase {
         $params = array(
         );
 
-        $result = uuid::get_user_uuids($params);
-        $result = \external_api::clean_returnvalue(uuid::get_user_uuids_returns(), $result);
+        $result = user::get_user_uuids($params);
+        $result = \external_api::clean_returnvalue(user::get_user_uuids_returns(), $result);
 
         $this->assertEquals(count($result), 3);
         foreach ($result as $item) {

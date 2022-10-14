@@ -65,7 +65,7 @@ class enrolment extends external_api {
         );
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid', MUST_EXIST);
 
-        $context = context_course::instance($enrolinstance->courseid, MUST_EXIST);
+        $context = \context_course::instance($enrolinstance->courseid, MUST_EXIST);
         self::validate_context($context);
         require_capability('enrol/self:config', $context);
 
@@ -124,10 +124,10 @@ class enrolment extends external_api {
             self::get_self_enrolment_methods_parameters(),
             array('courseid' => $courseid, 'roleid' => $roleid)
         );
-        self::validate_context(context_system::instance());
+        self::validate_context(\context_system::instance());
 
         $course = $DB->get_record('course', array('id' => $params['courseid']), '*', MUST_EXIST);
-        if (!core_course_category::can_view_course_info($course) && !can_access_course($course)) {
+        if (!\core_course_category::can_view_course_info($course) && !can_access_course($course)) {
             throw new moodle_exception('coursehidden');
         }
 
@@ -203,7 +203,7 @@ class enrolment extends external_api {
         );
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid, status', MUST_EXIST);
 
-        $context = context_course::instance($enrolinstance->courseid, MUST_EXIST);
+        $context = \context_course::instance($enrolinstance->courseid, MUST_EXIST);
         self::validate_context($context);
         require_capability('enrol/self:config', $context);
 

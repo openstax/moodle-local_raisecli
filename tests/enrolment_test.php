@@ -13,14 +13,16 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+namespace local_raisecli;
+
 use \local_raisecli\external\enrolment;
+use externallib_advanced_testcase;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
 require_once($CFG->dirroot . '/webservice/tests/helpers.php');
-require_once($CFG->libdir . '/externallib.php');
 
 /**
  * RAISE CLI Web Service tests
@@ -42,7 +44,7 @@ class enrolment_test extends externallib_advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
-        $context = context_course::instance($course->id, MUST_EXIST);
+        $context = \context_course::instance($course->id, MUST_EXIST);
         $roleid = $this->assignUserCapability('moodle/course:view', $context->id);
         $this->assignUserCapability('enrol/self:config', $context->id, $roleid);
 
@@ -77,14 +79,14 @@ class enrolment_test extends externallib_advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
-        $context = context_course::instance($course->id, MUST_EXIST);
+        $context = \context_course::instance($course->id, MUST_EXIST);
         $this->assignUserCapability('moodle/course:view', $context->id);
 
         $conditions = array('courseid' => $course->id, 'enrol' => 'self');
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id', MUST_EXIST);
 
-        $this->expectException(required_capability_exception::class);
+        $this->expectException(\required_capability_exception::class);
         $result = enrolment::enable_self_enrolment_method($enrolinstance->id);
     }
 
@@ -125,7 +127,7 @@ class enrolment_test extends externallib_advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
-        $context = context_course::instance($course->id, MUST_EXIST);
+        $context = \context_course::instance($course->id, MUST_EXIST);
         $roleid = $this->assignUserCapability('moodle/course:view', $context->id);
         $this->assignUserCapability('enrol/self:config', $context->id, $roleid);
 
@@ -164,7 +166,7 @@ class enrolment_test extends externallib_advanced_testcase {
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id', MUST_EXIST);
 
-        $this->expectException(required_capability_exception::class);
+        $this->expectException(\required_capability_exception::class);
         enrolment::set_self_enrolment_method_key($enrolinstance->id, 'enrolkey123');
     }
 }
