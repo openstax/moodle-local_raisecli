@@ -15,14 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 namespace local_raisecli\external;
 
-/**
- * RAISE CLI Web Service Function - get_user_uuids
- *
- * @package    local_raisecli
- * @copyright  2022 OpenStax
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/externallib.php');
 use external_api;
@@ -31,6 +23,13 @@ use external_multiple_structure;
 use external_value;
 use external_single_structure;
 
+/**
+ * RAISE CLI Web Service Function - User Attribute Access Functions
+ *
+ * @package    local_raisecli
+ * @copyright  2022 OpenStax
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class user extends external_api {
 
     /**

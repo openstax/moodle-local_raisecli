@@ -15,13 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 namespace local_raisecli\external;
 
-/**
- * RAISE CLI Web Service Function - enable_self_enrolment_method
- *
- * @package    local_raisecli
- * @copyright  2022 OpenStax
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/externallib.php');
@@ -31,6 +24,13 @@ use external_multiple_structure;
 use external_value;
 use external_single_structure;
 
+/**
+ * RAISE CLI Web Service Function - Enrolment Modifiers
+ *
+ * @package    local_raisecli
+ * @copyright  2022 OpenStax
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class enrolment extends external_api {
     /**
      * Returns description of enable_self_enrolment_method() parameters
