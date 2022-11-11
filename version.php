@@ -28,5 +28,5 @@ $plugin->component = 'local_raisecli';
 $plugin->version  = 2022101400;
 
 $plugin->dependencies = [
-    'local_raise' => ANY_VERSION
+    'local_raise' => 2022102100
 ];
