@@ -24,11 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$services = array(
-    'RAISE CLI web service' => array(
+$services = [
+    'RAISE CLI web service' => [
         'enabled' => 0,
         'shortname' => 'local_raisecli_service',
-        'functions' => array(
+        'functions' => [
             'core_course_import_course',
             'core_course_duplicate_course',
             'core_course_get_courses',
@@ -40,38 +40,45 @@ $services = array(
             'local_raisecli_enable_self_enrolment_method',
             'local_raisecli_get_role_by_shortname',
             'local_raisecli_get_self_enrolment_methods',
-            'local_raisecli_set_self_enrolment_method_key'
-        )
-    )
-);
+            'local_raisecli_set_self_enrolment_method_key',
+            'local_raisecli_get_user_uuids'
+        ]
+    ]
+];
 
-$functions = array(
-    'local_raisecli_enable_self_enrolment_method' => array(
-        'classname'    => 'local_raisecli_external',
+$functions = [
+    'local_raisecli_enable_self_enrolment_method' => [
+        'classname'    => 'local_raisecli\external\enrolment',
         'methodname'   => 'enable_self_enrolment_method',
         'description'  => 'Enable self enrolment method',
         'type'         => 'write',
         'capabilities' => 'enrol/self:config'
-    ),
-    'local_raisecli_get_role_by_shortname' => array(
-        'classname'    => 'local_raisecli_external',
+    ],
+    'local_raisecli_get_role_by_shortname' => [
+        'classname'    => 'local_raisecli\external\role',
         'methodname'   => 'get_role_by_shortname',
         'description'  => 'Get role information by shortname',
         'type'         => 'read',
         'capabilities' => 'moodle/role:manage'
-    ),
-    'local_raisecli_get_self_enrolment_methods' => array(
-        'classname'    => 'local_raisecli_external',
+    ],
+    'local_raisecli_get_self_enrolment_methods' => [
+        'classname'    => 'local_raisecli\external\enrolment',
         'methodname'   => 'get_self_enrolment_methods',
         'description'  => 'Return self-enrolment methods for a course and role',
         'type'         => 'read',
         'capabilities' => ''
-    ),
-    'local_raisecli_set_self_enrolment_method_key' => array(
-        'classname'    => 'local_raisecli_external',
+    ],
+    'local_raisecli_set_self_enrolment_method_key' => [
+        'classname'    => 'local_raisecli\external\enrolment',
         'methodname'   => 'set_self_enrolment_method_key',
         'description'  => 'Set key for self enrolment method',
         'type'         => 'write',
         'capabilities' => 'enrol/self:config'
-    ),
-);
+    ],
+    'local_raisecli_get_user_uuids' => [
+        'classname'    => 'local_raisecli\external\user',
+        'methodname'   => 'get_user_uuids',
+        'description'  => 'Get the uuids associated with a series of user ids',
+        'type'         => 'read',
+    ]
+];

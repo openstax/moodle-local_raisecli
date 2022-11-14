@@ -1,6 +1,6 @@
 # RAISE CLI plugin
 
-This plugin defines a service with functions used by the RASIE Moodle CLI tool to help automate management tasks on instances. The service itself includes built-in functions as well as a few custom service functions implemented in this plugin.
+This plugin defines a service with functions used by the RAISE Moodle CLI tool to help automate management tasks on instances. The service itself includes built-in functions as well as a few custom service functions implemented in this plugin.
 
 ## Installing
 
