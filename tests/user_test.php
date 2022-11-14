@@ -40,27 +40,27 @@ class user_test extends externallib_advanced_testcase {
 
         $this->resetAfterTest(true);
 
-        $user1 = array(
+        $user1 = [
             'user_id' => 1,
             'user_uuid' => "aaabbbccc"
-        );
-        $user2 = array(
+        ];
+        $user2 = [
             'user_id' => 2,
             'user_uuid' => "dddeeefff"
-        );
-        $user3 = array(
+        ];
+        $user3 = [
             'user_id' => 3,
             'user_uuid' => "ggghhhiii"
-        );
+        ];
         $DB->insert_record('local_raise_user', $user1);
         $DB->insert_record('local_raise_user', $user2);
         $DB->insert_record('local_raise_user', $user3);
 
-        $params = array(
-            'user_ids' => array(
+        $params = [
+            'user_ids' => [
                 'id' => $user1['user_id']
-            )
-        );
+            ]
+        ];
 
         $result = user::get_user_uuids($params);
         $result = \external_api::clean_returnvalue(user::get_user_uuids_returns(), $result);
@@ -68,8 +68,7 @@ class user_test extends externallib_advanced_testcase {
         $this->assertEquals($result[0]['user_uuid'], $user1['user_uuid']);
         $this->assertEquals(count($result), 1);
 
-        $params = array(
-        );
+        $params = [];
 
         $result = user::get_user_uuids($params);
         $result = \external_api::clean_returnvalue(user::get_user_uuids_returns(), $result);

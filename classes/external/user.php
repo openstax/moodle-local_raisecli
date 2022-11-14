@@ -38,18 +38,18 @@ class user extends external_api {
      */
     public static function get_user_uuids_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 'user_ids' => new external_multiple_structure(
                     new external_single_structure(
-                        array(
+                        [
                             'id' => new external_value(PARAM_INT, 'user id'),
-                        )
+                        ]
                     ),
                     'User IDs requested',
                     VALUE_DEFAULT,
-                    array()
+                    []
                 )
-            )
+            ]
         );
     }
 
@@ -64,11 +64,11 @@ class user extends external_api {
 
         $params = self::validate_parameters(
             self::get_user_uuids_parameters(),
-            array('user_ids' => $userids)
+            ['user_ids' => $userids]
         );
 
         if (count($userids) == 0) {
-            $rs = $DB->get_recordset('local_raise_user', array(), '', 'user_id, user_uuid');
+            $rs = $DB->get_recordset('local_raise_user', [], '', 'user_id, user_uuid');
         } else {
             $selector = implode(", ", array_column($userids, 'id'));
             $rs = $DB->get_recordset_select(
@@ -77,12 +77,12 @@ class user extends external_api {
             );
         };
 
-        $data = array();
+        $data = [];
         foreach ($rs as $item) {
-            $data[] = array(
+            $data[] = [
                 'user_id' => $item->user_id,
                 'user_uuid' => $item->user_uuid
-            );
+            ];
         };
         $rs->close();
         return $data;
@@ -96,10 +96,10 @@ class user extends external_api {
     public static function get_user_uuids_returns() {
         return new external_multiple_structure(
             new external_single_structure(
-                array(
+                [
                     'user_id' => new external_value(PARAM_INT, 'user_id value'),
                     'user_uuid' => new external_value(PARAM_TEXT, 'user uuid value'),
-                )
+                ]
             )
         );
     }

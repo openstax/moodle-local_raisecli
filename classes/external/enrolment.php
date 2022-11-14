@@ -39,9 +39,9 @@ class enrolment extends external_api {
      */
     public static function enable_self_enrolment_method_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 'enrolid' => new external_value(PARAM_INT, 'Enrolment id')
-            )
+            ]
         );
     }
 
@@ -56,13 +56,13 @@ class enrolment extends external_api {
         global $DB;
         $params = self::validate_parameters(
             self::enable_self_enrolment_method_parameters(),
-            array('enrolid' => $enrolid)
+            ['enrolid' => $enrolid]
         );
 
-        $conditions = array(
+        $conditions = [
             'id' => $params['enrolid'],
             'enrol' => 'self'
-        );
+        ];
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid', MUST_EXIST);
 
         $context = \context_course::instance($enrolinstance->courseid, MUST_EXIST);
@@ -71,12 +71,12 @@ class enrolment extends external_api {
 
         $enrolinstance->status = ENROL_INSTANCE_ENABLED;
         $DB->update_record('enrol', $enrolinstance);
-        return array(
+        return [
             'id' => $enrolinstance->id,
             'courseid' => $enrolinstance->courseid,
             'roleid' => $enrolinstance->roleid,
             'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
-        );
+        ];
     }
 
     /**
@@ -86,12 +86,12 @@ class enrolment extends external_api {
      */
     public static function enable_self_enrolment_method_returns() {
         return new external_single_structure(
-            array(
+            [
                 'id' => new external_value(PARAM_INT, 'id of course enrolment instance'),
                 'courseid' => new external_value(PARAM_INT, 'id of course'),
                 'roleid' => new external_value(PARAM_INT, 'id of role'),
                 'enabled' => new external_value(PARAM_BOOL, 'Enabled status of enrolment plugin'),
-            )
+            ]
         );
     }
 
@@ -102,10 +102,10 @@ class enrolment extends external_api {
      */
     public static function get_self_enrolment_methods_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 'courseid' => new external_value(PARAM_INT, 'Course id'),
                 'roleid' => new external_value(PARAM_INT, 'Role id')
-            )
+            ]
         );
     }
 
@@ -122,29 +122,29 @@ class enrolment extends external_api {
 
         $params = self::validate_parameters(
             self::get_self_enrolment_methods_parameters(),
-            array('courseid' => $courseid, 'roleid' => $roleid)
+            ['courseid' => $courseid, 'roleid' => $roleid]
         );
         self::validate_context(\context_system::instance());
 
-        $course = $DB->get_record('course', array('id' => $params['courseid']), '*', MUST_EXIST);
+        $course = $DB->get_record('course', ['id' => $params['courseid']], '*', MUST_EXIST);
         if (!\core_course_category::can_view_course_info($course) && !can_access_course($course)) {
             throw new moodle_exception('coursehidden');
         }
 
-        $result = array();
-        $conditions = array(
+        $result = [];
+        $conditions = [
             'courseid' => $params['courseid'],
             'roleid' => $params['roleid'],
             'enrol' => 'self'
-        );
+        ];
         $rs = $DB->get_recordset('enrol', $conditions, 'sortorder,id', 'id, courseid, roleid, status');
         foreach ($rs as $enrolinstance) {
-            $result[] = array(
+            $result[] = [
                 'id' => $enrolinstance->id,
                 'courseid' => $enrolinstance->courseid,
                 'roleid' => $enrolinstance->roleid,
                 'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
-            );
+            ];
         }
         $rs->close();
         return $result;
@@ -158,12 +158,12 @@ class enrolment extends external_api {
     public static function get_self_enrolment_methods_returns() {
         return new external_multiple_structure(
             new external_single_structure(
-                array(
+                [
                     'id' => new external_value(PARAM_INT, 'id of course enrolment instance'),
                     'courseid' => new external_value(PARAM_INT, 'id of course'),
                     'roleid' => new external_value(PARAM_INT, 'id of role'),
                     'enabled' => new external_value(PARAM_BOOL, 'Enabled status of enrolment plugin'),
-                )
+                ]
             )
         );
     }
@@ -175,10 +175,10 @@ class enrolment extends external_api {
      */
     public static function set_self_enrolment_method_key_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 'enrolid' => new external_value(PARAM_INT, 'Enrolment id'),
                 'enrolkey' => new external_value(PARAM_TEXT, 'Enrolment key')
-            )
+            ]
         );
     }
 
@@ -194,13 +194,13 @@ class enrolment extends external_api {
         global $DB;
         $params = self::validate_parameters(
             self::set_self_enrolment_method_key_parameters(),
-            array('enrolid' => $enrolid, 'enrolkey' => $enrolkey)
+            ['enrolid' => $enrolid, 'enrolkey' => $enrolkey]
         );
 
-        $conditions = array(
+        $conditions = [
             'id' => $params['enrolid'],
             'enrol' => 'self'
-        );
+        ];
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid, status', MUST_EXIST);
 
         $context = \context_course::instance($enrolinstance->courseid, MUST_EXIST);
@@ -209,12 +209,12 @@ class enrolment extends external_api {
 
         $enrolinstance->password = $params['enrolkey'];
         $DB->update_record('enrol', $enrolinstance);
-        return array(
+        return [
             'id' => $enrolinstance->id,
             'courseid' => $enrolinstance->courseid,
             'roleid' => $enrolinstance->roleid,
             'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
-        );
+        ];
     }
 
     /**
@@ -224,12 +224,12 @@ class enrolment extends external_api {
      */
     public static function set_self_enrolment_method_key_returns() {
         return new external_single_structure(
-            array(
+            [
                 'id' => new external_value(PARAM_INT, 'id of course enrolment instance'),
                 'courseid' => new external_value(PARAM_INT, 'id of course'),
                 'roleid' => new external_value(PARAM_INT, 'id of role'),
                 'enabled' => new external_value(PARAM_BOOL, 'Enabled status of enrolment plugin'),
-            )
+            ]
         );
     }
 }

@@ -40,7 +40,7 @@ class role_test extends externallib_advanced_testcase {
 
         $this->resetAfterTest(true);
 
-        $roleid = $this->getDataGenerator()->create_role(array('shortname' => 'roleshortname'));
+        $roleid = $this->getDataGenerator()->create_role(['shortname' => 'roleshortname']);
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
         $context = \context_system::instance();

@@ -48,7 +48,7 @@ class enrolment_test extends externallib_advanced_testcase {
         $roleid = $this->assignUserCapability('moodle/course:view', $context->id);
         $this->assignUserCapability('enrol/self:config', $context->id, $roleid);
 
-        $conditions = array('courseid' => $course->id, 'enrol' => 'self');
+        $conditions = ['courseid' => $course->id, 'enrol' => 'self'];
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, status', MUST_EXIST);
 
@@ -82,7 +82,7 @@ class enrolment_test extends externallib_advanced_testcase {
         $context = \context_course::instance($course->id, MUST_EXIST);
         $this->assignUserCapability('moodle/course:view', $context->id);
 
-        $conditions = array('courseid' => $course->id, 'enrol' => 'self');
+        $conditions = ['courseid' => $course->id, 'enrol' => 'self'];
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id', MUST_EXIST);
 
@@ -102,7 +102,7 @@ class enrolment_test extends externallib_advanced_testcase {
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
 
-        $conditions = array('courseid' => $course->id, 'enrol' => 'self');
+        $conditions = ['courseid' => $course->id, 'enrol' => 'self'];
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid, status', MUST_EXIST);
 
@@ -131,7 +131,7 @@ class enrolment_test extends externallib_advanced_testcase {
         $roleid = $this->assignUserCapability('moodle/course:view', $context->id);
         $this->assignUserCapability('enrol/self:config', $context->id, $roleid);
 
-        $conditions = array('courseid' => $course->id, 'enrol' => 'self');
+        $conditions = ['courseid' => $course->id, 'enrol' => 'self'];
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, status', MUST_EXIST);
 
@@ -162,7 +162,7 @@ class enrolment_test extends externallib_advanced_testcase {
         $context = \context_course::instance($course->id, MUST_EXIST);
         $this->assignUserCapability('moodle/course:view', $context->id);
 
-        $conditions = array('courseid' => $course->id, 'enrol' => 'self');
+        $conditions = ['courseid' => $course->id, 'enrol' => 'self'];
 
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id', MUST_EXIST);
 
