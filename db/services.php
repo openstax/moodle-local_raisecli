@@ -32,6 +32,7 @@ $services = [
             'core_course_import_course',
             'core_course_duplicate_course',
             'core_course_get_courses',
+            'core_course_get_courses_by_field',
             'core_enrol_get_enrolled_users',
             'core_user_create_users',
             'core_user_get_users',
