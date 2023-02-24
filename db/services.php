@@ -39,6 +39,7 @@ $services = [
             'enrol_manual_enrol_users',
             'gradereport_user_get_grade_items',
             'local_raisecli_enable_self_enrolment_method',
+            'local_raisecli_get_quiz_attempt',
             'local_raisecli_get_role_by_shortname',
             'local_raisecli_get_self_enrolment_methods',
             'local_raisecli_set_self_enrolment_method_key',
@@ -54,6 +55,13 @@ $functions = [
         'description'  => 'Enable self enrolment method',
         'type'         => 'write',
         'capabilities' => 'enrol/self:config'
+    ],
+    'local_raisecli_get_quiz_attempt' => [
+        'classname'    => 'local_raisecli\external\quiz',
+        'methodname'   => 'get_quiz_attempt',
+        'description'  => 'Returns detailed information for the given finished attempt.',
+        'type'         => 'read',
+        'capabilities' => 'mod/quiz:viewreports'
     ],
     'local_raisecli_get_role_by_shortname' => [
         'classname'    => 'local_raisecli\external\role',
