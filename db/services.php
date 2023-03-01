@@ -43,7 +43,10 @@ $services = [
             'local_raisecli_get_role_by_shortname',
             'local_raisecli_get_self_enrolment_methods',
             'local_raisecli_set_self_enrolment_method_key',
-            'local_raisecli_get_user_uuids'
+            'local_raisecli_get_user_uuids',
+            'mod_quiz_get_quizzes_by_courses',
+            'mod_quiz_get_user_attempts'
+
         ]
     ]
 ];
