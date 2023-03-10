@@ -78,7 +78,7 @@ $functions = [
         'methodname' => 'get_self_enrolment_methods',
         'description' => 'Return self-enrolment methods for a course and role',
         'type' => 'read',
-        'capabilities' => ''
+        'capabilities' => 'moodle/category:viewcourselist'
     ],
     'local_raisecli_set_self_enrolment_method_key' => [
         'classname' => 'local_raisecli\external\enrolment',
