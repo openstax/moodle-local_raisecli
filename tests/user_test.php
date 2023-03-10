@@ -34,6 +34,8 @@ require_once($CFG->dirroot . '/webservice/tests/helpers.php');
 class user_test extends externallib_advanced_testcase {
     /**
      * Test local_raisecli_get_user_uuids
+     *
+     * @covers ::get_user_uuids
      */
     public function test_local_raisecli_get_user_uuids() {
         global $DB;

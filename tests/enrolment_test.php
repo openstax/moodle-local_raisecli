@@ -35,6 +35,8 @@ class enrolment_test extends externallib_advanced_testcase {
 
     /**
      * Test enable_self_enrolment_method
+     *
+     * @covers ::enable_self_enrolment_method
      */
     public function test_enable_self_enrolment_method() {
         global $DB;
@@ -70,6 +72,8 @@ class enrolment_test extends externallib_advanced_testcase {
 
     /**
      * Test enable_self_enrolment_method without capabilities
+     *
+     * @covers ::enable_self_enrolment_method
      */
     public function test_enable_self_enrolment_method_without_capabilities() {
         global $DB;
@@ -92,6 +96,8 @@ class enrolment_test extends externallib_advanced_testcase {
 
     /**
      * Test get_self_enrolment_methods
+     *
+     * @covers ::get_self_enrolment_methods
      */
     public function test_get_self_enrolment_methods() {
         global $DB;
@@ -118,6 +124,8 @@ class enrolment_test extends externallib_advanced_testcase {
 
     /**
      * Test set_self_enrolment_method_key
+     *
+     * @covers ::set_self_enrolment_method_key
      */
     public function test_set_self_enrolment_method_key() {
         global $DB;
@@ -150,6 +158,8 @@ class enrolment_test extends externallib_advanced_testcase {
 
     /**
      * Test set_self_enrolment_method_key without capabilities
+     *
+     * @covers ::set_self_enrolment_method_key
      */
     public function test_set_self_enrolment_method_key_without_capabilities() {
         global $DB;

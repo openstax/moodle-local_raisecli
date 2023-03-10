@@ -119,6 +119,8 @@ class quiz_test extends externallib_advanced_testcase {
 
     /**
      * Test local_raisecli_get_quiz_attempt when user skips all questions
+     *
+     * @covers ::get_quiz_attempt
      */
     public function test_local_raisecli_get_quiz_attempt_noresponses() {
         global $DB;
@@ -185,6 +187,8 @@ class quiz_test extends externallib_advanced_testcase {
 
     /**
      * Test local_raisecli_get_quiz_attempt when user attempts all questions
+     *
+     * @covers ::get_quiz_attempt
      */
     public function test_local_raisecli_get_quiz_attempt_withresponses() {
         global $DB;

@@ -34,6 +34,8 @@ require_once($CFG->dirroot . '/webservice/tests/helpers.php');
 class role_test extends externallib_advanced_testcase {
     /**
      * Test get_role_by_shortname
+     *
+     * @covers ::get_role_by_shortname
      */
     public function test_get_role_by_shortname() {
         global $DB;
@@ -58,6 +60,8 @@ class role_test extends externallib_advanced_testcase {
 
     /**
      * Test get_role_by_shortname without capabilities
+     *
+     * @covers ::get_role_by_shortname
      */
     public function test_get_role_by_shortname_without_capabilities() {
         global $DB;
