@@ -67,10 +67,14 @@ class user extends external_api {
             ['user_ids' => $userids]
         );
 
+        $context = \context_system::instance();
+        self::validate_context($context);
+        require_capability('moodle/user:viewhiddendetails', $context);
+
         if (count($userids) == 0) {
             $rs = $DB->get_recordset('local_raise_user', [], '', 'user_id, user_uuid');
         } else {
-            $selector = implode(", ", array_column($userids, 'id'));
+            $selector = implode(", ", array_column($params['user_ids'], 'id'));
             $rs = $DB->get_recordset_select(
                 'local_raise_user',
                 "user_id IN ({$selector})"

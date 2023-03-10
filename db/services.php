@@ -92,5 +92,6 @@ $functions = [
         'methodname' => 'get_user_uuids',
         'description' => 'Get the uuids associated with a series of user ids',
         'type' => 'read',
+        'capabilities' => 'moodle/user:viewhiddendetails'
     ]
 ];
