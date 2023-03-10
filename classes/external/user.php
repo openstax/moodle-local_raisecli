@@ -82,12 +82,14 @@ class user extends external_api {
         };
 
         $data = [];
-        foreach ($rs as $item) {
-            $data[] = [
-                'user_id' => $item->user_id,
-                'user_uuid' => $item->user_uuid
-            ];
-        };
+        if ($rs->valid()) {
+            foreach ($rs as $item) {
+                $data[] = [
+                    'user_id' => $item->user_id,
+                    'user_uuid' => $item->user_uuid
+                ];
+            };
+        }
         $rs->close();
         return $data;
     }

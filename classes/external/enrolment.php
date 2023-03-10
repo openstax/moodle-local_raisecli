@@ -138,13 +138,15 @@ class enrolment extends external_api {
             'enrol' => 'self'
         ];
         $rs = $DB->get_recordset('enrol', $conditions, 'sortorder,id', 'id, courseid, roleid, status');
-        foreach ($rs as $enrolinstance) {
-            $result[] = [
-                'id' => $enrolinstance->id,
-                'courseid' => $enrolinstance->courseid,
-                'roleid' => $enrolinstance->roleid,
-                'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
-            ];
+        if ($rs->valid()) {
+            foreach ($rs as $enrolinstance) {
+                $result[] = [
+                    'id' => $enrolinstance->id,
+                    'courseid' => $enrolinstance->courseid,
+                    'roleid' => $enrolinstance->roleid,
+                    'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
+                ];
+            }
         }
         $rs->close();
         return $result;
