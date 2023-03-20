@@ -34,11 +34,18 @@ require_once($CFG->dirroot . '/webservice/tests/helpers.php');
 class user_test extends externallib_advanced_testcase {
     /**
      * Test local_raisecli_get_user_uuids
+     *
+     * @covers ::get_user_uuids
      */
     public function test_local_raisecli_get_user_uuids() {
         global $DB;
 
         $this->resetAfterTest(true);
+
+        $testuser = $this->getDataGenerator()->create_user();
+        $this->setUser($testuser);
+        $context = \context_system::instance();
+        $this->assignUserCapability('moodle/user:viewhiddendetails', $context->id);
 
         $user1 = [
             'user_id' => 1,
@@ -57,16 +64,16 @@ class user_test extends externallib_advanced_testcase {
         $DB->insert_record('local_raise_user', $user3);
 
         $params = [
-            'user_ids' => [
-                'id' => $user1['user_id']
-            ]
+            ['id' => $user1['user_id']],
+            ['id' => $user2['user_id']]
         ];
 
         $result = user::get_user_uuids($params);
         $result = \external_api::clean_returnvalue(user::get_user_uuids_returns(), $result);
 
+        $this->assertEquals(count($result), 2);
         $this->assertEquals($result[0]['user_uuid'], $user1['user_uuid']);
-        $this->assertEquals(count($result), 1);
+        $this->assertEquals($result[1]['user_uuid'], $user2['user_uuid']);
 
         $params = [];
 
