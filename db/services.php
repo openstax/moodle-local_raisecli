@@ -37,6 +37,7 @@ $services = [
             'core_user_create_users',
             'core_user_get_users',
             'enrol_manual_enrol_users',
+            'enrol_manual_unenrol_users',
             'gradereport_user_get_grade_items',
             'local_raisecli_enable_self_enrolment_method',
             'local_raisecli_get_quiz_attempt',
