@@ -46,8 +46,8 @@ $services = [
             'local_raisecli_set_self_enrolment_method_key',
             'local_raisecli_get_user_uuids',
             'mod_quiz_get_quizzes_by_courses',
-            'mod_quiz_get_user_attempts'
-
+            'mod_quiz_get_user_attempts',
+            'local_raisecli_get_policy_acceptance_data'
         ]
     ]
 ];
@@ -94,5 +94,12 @@ $functions = [
         'description' => 'Get the uuids associated with a series of user ids',
         'type' => 'read',
         'capabilities' => 'moodle/user:viewhiddendetails'
-    ]
+    ],
+    'local_raisecli_get_policy_acceptance_data' => [
+        'classname' => 'local_raisecli\external\policies',
+        'methodname' => 'get_policy_acceptance_data',
+        'description' => 'Retrieve policy acceptance data for all users',
+        'type' => 'read',
+        'capabilities' => 'moodle/user:viewhiddendetails'
+    ],
 ];
