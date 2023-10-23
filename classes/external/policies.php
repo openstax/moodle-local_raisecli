@@ -27,8 +27,19 @@ use external_multiple_structure;
 use external_value;
 use external_single_structure;
 
+/**
+ * RAISE CLI Web Service Function - Role Attribute Access Functions
+ *
+ * @package    local_raisecli
+ * @copyright  2022 OpenStax
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class policies extends external_api {
-
+    /**
+     * Describes the parameters for get_policy_acceptance_data.
+     *
+     * @return external_function_parameters
+     */
     public static function get_policy_acceptance_data_parameters() {
         return new external_function_parameters(
             [
@@ -47,6 +58,13 @@ class policies extends external_api {
         );
     }
 
+    /**
+     * Retrieve policy acceptance data for specified users and policy version
+     *
+     * @param int $policyversionid Policy version ID
+     * @param array $userids Optional list of user IDs
+     * @return array Policy acceptance data (userid, status) for specified users and policy version
+     */
     public static function get_policy_acceptance_data($policyversionid, $userids = []) {
         global $DB;
 
@@ -81,6 +99,12 @@ class policies extends external_api {
         $rs->close();
         return $data;
     }
+
+    /**
+     * Returns description of get_policy_acceptance_data return values
+     *
+     * @return external_single_structure
+     */
     public static function get_policy_acceptance_data_returns() {
         return new external_multiple_structure(
             new external_single_structure(
