@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_raisecli';
-$plugin->version = 2023061400;
+$plugin->version = 2023061403;
 
 $plugin->dependencies = [
-    'local_raise' => 2022102100
+    'local_raise' => 2022102100,
 ];

@@ -43,7 +43,7 @@ class quiz extends external_api {
      */
     public static function get_quiz_attempt_parameters() {
         return new external_function_parameters ([
-            'attemptid' => new external_value(PARAM_INT, 'attempt id')
+            'attemptid' => new external_value(PARAM_INT, 'attempt id'),
         ]);
     }
 
@@ -73,7 +73,7 @@ class quiz extends external_api {
             'timestart',
             'timefinish',
             'timemodified',
-            'gradednotificationsenttime'
+            'gradednotificationsenttime',
         ];
         $attempt = $DB->get_record(
             'quiz_attempts',
@@ -121,7 +121,7 @@ class quiz extends external_api {
                     'slot' => $slot,
                     'type' => $questiontype,
                     'idnumber' => $question->idnumber,
-                    'answer' => $responseanswers
+                    'answer' => $responseanswers,
                 ];
             }
         }
@@ -138,9 +138,9 @@ class quiz extends external_api {
                 'timefinish' => $attempt->timefinish,
                 'timemodified' => $attempt->timemodified,
                 'sumgrades' => $attempt->sumgrades,
-                'gradednotificationsenttime' => $attempt->gradednotificationsenttime
+                'gradednotificationsenttime' => $attempt->gradednotificationsenttime,
             ],
-            'questions' => $questiondata
+            'questions' => $questiondata,
         ];
     }
 
@@ -168,7 +168,7 @@ class quiz extends external_api {
                 'gradednotificationsenttime' => new external_value(
                     PARAM_INT,
                     'Time when the student was notified that manual grading of their attempt was complete.'
-                )
+                ),
             ]),
             'questions' => new external_multiple_structure(
                 new external_single_structure([
@@ -177,9 +177,9 @@ class quiz extends external_api {
                     'idnumber' => new external_value(PARAM_TEXT, 'question idnumber'),
                     'answer' => new external_multiple_structure(
                         new external_value(PARAM_RAW, 'answer HTML as defined in the question content')
-                    )
+                    ),
                 ])
-            )
+                ),
         ]);
     }
 }

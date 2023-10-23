@@ -48,7 +48,7 @@ class user extends external_api {
                     'User IDs requested',
                     VALUE_DEFAULT,
                     []
-                )
+                ),
             ]
         );
     }
@@ -86,7 +86,7 @@ class user extends external_api {
             foreach ($rs as $item) {
                 $data[] = [
                     'user_id' => $item->user_id,
-                    'user_uuid' => $item->user_uuid
+                    'user_uuid' => $item->user_uuid,
                 ];
             };
         }

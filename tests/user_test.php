@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 namespace local_raisecli;
 
-use \local_raisecli\external\user;
+use local_raisecli\external\user;
 use externallib_advanced_testcase;
 
 defined('MOODLE_INTERNAL') || die();
@@ -49,15 +49,15 @@ class user_test extends externallib_advanced_testcase {
 
         $user1 = [
             'user_id' => 1,
-            'user_uuid' => "aaabbbccc"
+            'user_uuid' => "aaabbbccc",
         ];
         $user2 = [
             'user_id' => 2,
-            'user_uuid' => "dddeeefff"
+            'user_uuid' => "dddeeefff",
         ];
         $user3 = [
             'user_id' => 3,
-            'user_uuid' => "ggghhhiii"
+            'user_uuid' => "ggghhhiii",
         ];
         $DB->insert_record('local_raise_user', $user1);
         $DB->insert_record('local_raise_user', $user2);
@@ -65,7 +65,7 @@ class user_test extends externallib_advanced_testcase {
 
         $params = [
             ['id' => $user1['user_id']],
-            ['id' => $user2['user_id']]
+            ['id' => $user2['user_id']],
         ];
 
         $result = user::get_user_uuids($params);
