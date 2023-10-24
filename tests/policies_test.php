@@ -1,5 +1,4 @@
 <?php
-<?php
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace local_raisecli\external\tests;
+namespace local_raisecli;
 
 use local_raisecli\external\policies;
 use externallib_advanced_testcase;
@@ -33,7 +32,6 @@ require_once($CFG->dirroot . '/webservice/tests/helpers.php');
  * @copyright   2022 OpenStax
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class policies_test extends externallib_advanced_testcase {
     /**
      * Test policies::get_policy_acceptance_data method
@@ -45,28 +43,32 @@ class policies_test extends externallib_advanced_testcase {
 
         $this->resetAfterTest(true);
 
+        $context = \context_system::instance();
+        $this->assignUserCapability('moodle/user:viewhiddendetails', $context->id);
         $policyversionid = 1;
 
-        $user1 = $this->getDataGenerator()->create_user();
-        $user2 = $this->getDataGenerator()->create_user();
-
-        $DB->insert_record('tool_policy_acceptances', ['userid' => $user1->id, 'policyversionid' => $policyversionid, 'status' => '1']);
-        $DB->insert_record('tool_policy_acceptances', ['userid' => $user2->id, 'policyversionid' => $policyversionid, 'status' => '0']);
+        $DB->insert_record('tool_policy_acceptances',
+            ['userid' => '1', 'policyversionid' => $policyversionid,
+            'status' => '1', 'usermodified' => '1',
+            'timecreated' => '1', 'timemodified' => '1', ]);
+        $DB->insert_record('tool_policy_acceptances',
+            ['userid' => '2', 'policyversionid' => $policyversionid,
+            'status' => '0', 'usermodified' => '1',
+            'timecreated' => '1', 'timemodified' => '1', ]);
 
         $params = [
             'policyversionid' => $policyversionid,
             'user_ids' => [
-                ['id' => $user1->id],
-                ['id' => $user2->id],
-            ]
+                ['id' => '1'],
+                ['id' => '2'],
+            ],
         ];
 
         $result = policies::get_policy_acceptance_data($params['policyversionid'], $params['user_ids']);
-        
         $this->assertCount(2, $result);
-        $this->assertEquals($user1->id, $result[0]['userid']);
+        $this->assertEquals('1', $result[0]['userid']);
         $this->assertEquals('1', $result[0]['status']);
-        $this->assertEquals($user2->id, $result[1]['userid']);
+        $this->assertEquals('2', $result[1]['userid']);
         $this->assertEquals('0', $result[1]['status']);
     }
 }
