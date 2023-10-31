@@ -16,7 +16,7 @@
 
 namespace local_raisecli;
 
-use local_raisecli\external\policies;
+use local_raisecli\external\policy;
 use externallib_advanced_testcase;
 
 defined('MOODLE_INTERNAL') || die();
@@ -29,12 +29,12 @@ require_once($CFG->dirroot . '/webservice/tests/helpers.php');
  * RAISE CLI Web Service tests
  *
  * @package     local_raisecli
- * @copyright   2022 OpenStax
+ * @copyright   2023 OpenStax
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class policies_test extends externallib_advanced_testcase {
+class policy_test extends externallib_advanced_testcase {
     /**
-     * Test policies::get_policy_acceptance_data method
+     * Test policy::get_policy_acceptance_data method
      *
      * @covers ::get_policy_acceptance_data
      */
@@ -44,7 +44,7 @@ class policies_test extends externallib_advanced_testcase {
         $this->resetAfterTest(true);
 
         $context = \context_system::instance();
-        $this->assignUserCapability('moodle/user:viewhiddendetails', $context->id);
+        $this->assignUserCapability('tool/policy:viewacceptances', $context->id);
         $policyversionid = 1;
 
         $DB->insert_record('tool_policy_acceptances',
@@ -55,7 +55,10 @@ class policies_test extends externallib_advanced_testcase {
             ['userid' => '2', 'policyversionid' => $policyversionid,
             'status' => '0', 'usermodified' => '1',
             'timecreated' => '1', 'timemodified' => '1', ]);
-
+        $DB->insert_record('tool_policy_acceptances',
+            ['userid' => '3', 'policyversionid' => $policyversionid,
+            'status' => '1', 'usermodified' => '1',
+            'timecreated' => '1', 'timemodified' => '1', ]);
         $params = [
             'policyversionid' => $policyversionid,
             'user_ids' => [
@@ -64,11 +67,26 @@ class policies_test extends externallib_advanced_testcase {
             ],
         ];
 
-        $result = policies::get_policy_acceptance_data($params['policyversionid'], $params['user_ids']);
+        $result = policy::get_policy_acceptance_data($params['policyversionid'], $params['user_ids']);
         $this->assertCount(2, $result);
-        $this->assertEquals('1', $result[0]['userid']);
+        $this->assertEquals('1', $result[0]['user_id']);
         $this->assertEquals('1', $result[0]['status']);
-        $this->assertEquals('2', $result[1]['userid']);
+        $this->assertEquals('2', $result[1]['user_id']);
         $this->assertEquals('0', $result[1]['status']);
+
+        $params = [
+            'policyversionid' => $policyversionid,
+            'user_ids' => [],
+        ];
+
+        $resultwithoutuserids = policy::get_policy_acceptance_data($params['policyversionid'], $params['user_ids']);
+        $this->assertCount(3, $resultwithoutuserids);
+        $this->assertEquals('1', $resultwithoutuserids[0]['user_id']);
+        $this->assertEquals('1', $resultwithoutuserids[0]['status']);
+        $this->assertEquals('2', $resultwithoutuserids[1]['user_id']);
+        $this->assertEquals('0', $resultwithoutuserids[1]['status']);
+        $this->assertEquals('3', $resultwithoutuserids[2]['user_id']);
+        $this->assertEquals('1', $resultwithoutuserids[2]['status']);
+
     }
 }

@@ -96,10 +96,10 @@ $functions = [
         'capabilities' => 'moodle/user:viewhiddendetails',
     ],
     'local_raisecli_get_policy_acceptance_data' => [
-        'classname' => 'local_raisecli\external\policies',
+        'classname' => 'local_raisecli\external\policy',
         'methodname' => 'get_policy_acceptance_data',
         'description' => 'Retrieve policy acceptance data for all users',
         'type' => 'read',
-        'capabilities' => 'moodle/user:viewhiddendetails',
+        'capabilities' => 'tool/policy:viewacceptances',
     ],
 ];

@@ -179,7 +179,7 @@ class quiz extends external_api {
                         new external_value(PARAM_RAW, 'answer HTML as defined in the question content')
                     ),
                 ])
-                ),
+            ),
         ]);
     }
 }

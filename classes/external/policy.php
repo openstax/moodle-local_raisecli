@@ -19,7 +19,6 @@ namespace local_raisecli\external;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
-require_once($CFG->libdir . '/questionlib.php');
 
 use external_api;
 use external_function_parameters;
@@ -31,10 +30,10 @@ use external_single_structure;
  * RAISE CLI Web Service Function - Role Attribute Access Functions
  *
  * @package    local_raisecli
- * @copyright  2022 OpenStax
+ * @copyright  2023 OpenStax
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class policies extends external_api {
+class policy extends external_api {
     /**
      * Describes the parameters for get_policy_acceptance_data.
      *
@@ -75,7 +74,7 @@ class policies extends external_api {
 
         $context = \context_system::instance();
         self::validate_context($context);
-        require_capability('moodle/user:viewhiddendetails', $context);
+        require_capability('tool/policy:viewacceptances', $context);
 
         if (empty($userids)) {
             $rs = $DB->get_recordset('tool_policy_acceptances', ['policyversionid' => $policyversionid], '', 'userid, status');
@@ -84,14 +83,14 @@ class policies extends external_api {
             $rs = $DB->get_recordset_select(
                 'tool_policy_acceptances',
                 "policyversionid = :policyversionid AND userid IN ({$selector})",
-                ['policyversionid' => $policyversionid]
+                ['policyversionid' => $params['policyversionid']]
             );
         }
 
         $data = [];
         foreach ($rs as $record) {
             $data[] = [
-                'userid' => $record->userid,
+                'user_id' => $record->userid,
                 'status' => $record->status,
             ];
         }
@@ -109,7 +108,7 @@ class policies extends external_api {
         return new external_multiple_structure(
             new external_single_structure(
                 [
-                    "userid" => new external_value(PARAM_INT, 'User ID'),
+                    "user_id" => new external_value(PARAM_INT, 'User ID'),
                     "status" => new external_value(PARAM_TEXT, 'Policy acceptance status'),
                 ]
             )
