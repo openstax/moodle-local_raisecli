@@ -16,7 +16,7 @@
 
 namespace local_raisecli;
 
-use \local_raisecli\external\quiz;
+use local_raisecli\external\quiz;
 use externallib_advanced_testcase;
 
 defined('MOODLE_INTERNAL') || die();
@@ -51,7 +51,7 @@ class quiz_test extends externallib_advanced_testcase {
     public function setup_quiz_and_questions() {
         $category = $this->getDataGenerator()->create_category();
         $course = $this->getDataGenerator()->create_course([
-            'category' => $category->id
+            'category' => $category->id,
         ]);
         $quiz = $this->getDataGenerator()->create_module('quiz', ['course' => $course->id, 'sumgrades' => 2]);
         $qgen = $this->getDataGenerator()->get_plugin_generator('core_question');
@@ -67,21 +67,21 @@ class quiz_test extends externallib_advanced_testcase {
             'answer' => [
                 0 => [
                     'text' => '<p>Red</p>',
-                    'format' => FORMAT_HTML
+                    'format' => FORMAT_HTML,
                 ],
                 1 => [
                     'text' => '<p>Blue</p>',
-                    'format' => FORMAT_HTML
+                    'format' => FORMAT_HTML,
                 ],
                 2 => [
                     'text' => '<p>Green</p>',
-                    'format' => FORMAT_HTML
+                    'format' => FORMAT_HTML,
                 ],
                 3 => [
                     'text' => '<p>Orange</p>',
-                    'format' => FORMAT_HTML
-                ]
-            ]
+                    'format' => FORMAT_HTML,
+                ],
+            ],
         ];
 
         $q2data = [
@@ -92,21 +92,21 @@ class quiz_test extends externallib_advanced_testcase {
             'answer' => [
                 0 => [
                     'text' => '<p>1</p>',
-                    'format' => FORMAT_HTML
+                    'format' => FORMAT_HTML,
                 ],
                 1 => [
                     'text' => '<p>2</p>',
-                    'format' => FORMAT_HTML
+                    'format' => FORMAT_HTML,
                 ],
                 2 => [
                     'text' => '<p>3</p>',
-                    'format' => FORMAT_HTML
+                    'format' => FORMAT_HTML,
                 ],
                 3 => [
                     'text' => '<p>4</p>',
-                    'format' => FORMAT_HTML
-                ]
-            ]
+                    'format' => FORMAT_HTML,
+                ],
+            ],
         ];
 
         $q1 = $qgen->create_question('multichoice', null, $q1data);
@@ -161,7 +161,7 @@ class quiz_test extends externallib_advanced_testcase {
                 'timefinish' => $timenow,
                 'timemodified' => $timenow,
                 'sumgrades' => $attemptobj->get_sum_marks(),
-                'gradednotificationsenttime' => $timenow
+                'gradednotificationsenttime' => $timenow,
             ]
         );
         $this->assertEquals(count($result['questions']), 2);
@@ -170,7 +170,7 @@ class quiz_test extends externallib_advanced_testcase {
                 'slot' => 1,
                 'type' => 'multichoice',
                 'idnumber' => $questions[0]->idnumber,
-                'answer' => []
+                'answer' => [],
             ],
             $result['questions']
         ));
@@ -179,7 +179,7 @@ class quiz_test extends externallib_advanced_testcase {
                 'slot' => 2,
                 'type' => 'multichoice',
                 'idnumber' => $questions[1]->idnumber,
-                'answer' => []
+                'answer' => [],
             ],
             $result['questions']
         ));
@@ -215,7 +215,7 @@ class quiz_test extends externallib_advanced_testcase {
             false,
             [
                 '1' => ['answer' => 'Green'],
-                '2' => ['1' => '0', '2' => '1', '3' => '0', '4' => '1']
+                '2' => ['1' => '0', '2' => '1', '3' => '0', '4' => '1'],
             ]
         );
 
@@ -239,7 +239,7 @@ class quiz_test extends externallib_advanced_testcase {
                 'timefinish' => $timenow,
                 'timemodified' => $timenow,
                 'sumgrades' => $attemptobj->get_sum_marks(),
-                'gradednotificationsenttime' => $timenow
+                'gradednotificationsenttime' => $timenow,
             ]
         );
         $this->assertEquals(count($result['questions']), 2);
@@ -252,7 +252,7 @@ class quiz_test extends externallib_advanced_testcase {
                 'slot' => 1,
                 'type' => 'multichoice',
                 'idnumber' => $questions[0]->idnumber,
-                'answer' => ['<p>Green</p>']
+                'answer' => ['<p>Green</p>'],
             ],
             $result['questions']
         ));
@@ -261,7 +261,7 @@ class quiz_test extends externallib_advanced_testcase {
                 'slot' => 2,
                 'type' => 'multichoice',
                 'idnumber' => $questions[1]->idnumber,
-                'answer' => ['<p>2</p>', '<p>4</p>']
+                'answer' => ['<p>2</p>', '<p>4</p>'],
             ],
             $result['questions']
         ));

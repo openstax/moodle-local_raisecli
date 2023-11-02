@@ -40,7 +40,7 @@ class enrolment extends external_api {
     public static function enable_self_enrolment_method_parameters() {
         return new external_function_parameters(
             [
-                'enrolid' => new external_value(PARAM_INT, 'Enrolment id')
+                'enrolid' => new external_value(PARAM_INT, 'Enrolment id'),
             ]
         );
     }
@@ -61,7 +61,7 @@ class enrolment extends external_api {
 
         $conditions = [
             'id' => $params['enrolid'],
-            'enrol' => 'self'
+            'enrol' => 'self',
         ];
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid', MUST_EXIST);
 
@@ -75,7 +75,7 @@ class enrolment extends external_api {
             'id' => $enrolinstance->id,
             'courseid' => $enrolinstance->courseid,
             'roleid' => $enrolinstance->roleid,
-            'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
+            'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED,
         ];
     }
 
@@ -104,7 +104,7 @@ class enrolment extends external_api {
         return new external_function_parameters(
             [
                 'courseid' => new external_value(PARAM_INT, 'Course id'),
-                'roleid' => new external_value(PARAM_INT, 'Role id')
+                'roleid' => new external_value(PARAM_INT, 'Role id'),
             ]
         );
     }
@@ -135,7 +135,7 @@ class enrolment extends external_api {
         $conditions = [
             'courseid' => $params['courseid'],
             'roleid' => $params['roleid'],
-            'enrol' => 'self'
+            'enrol' => 'self',
         ];
         $rs = $DB->get_recordset('enrol', $conditions, 'sortorder,id', 'id, courseid, roleid, status');
         if ($rs->valid()) {
@@ -144,7 +144,7 @@ class enrolment extends external_api {
                     'id' => $enrolinstance->id,
                     'courseid' => $enrolinstance->courseid,
                     'roleid' => $enrolinstance->roleid,
-                    'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
+                    'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED,
                 ];
             }
         }
@@ -179,7 +179,7 @@ class enrolment extends external_api {
         return new external_function_parameters(
             [
                 'enrolid' => new external_value(PARAM_INT, 'Enrolment id'),
-                'enrolkey' => new external_value(PARAM_TEXT, 'Enrolment key')
+                'enrolkey' => new external_value(PARAM_TEXT, 'Enrolment key'),
             ]
         );
     }
@@ -201,7 +201,7 @@ class enrolment extends external_api {
 
         $conditions = [
             'id' => $params['enrolid'],
-            'enrol' => 'self'
+            'enrol' => 'self',
         ];
         $enrolinstance = $DB->get_record('enrol', $conditions, 'id, courseid, roleid, status', MUST_EXIST);
 
@@ -215,7 +215,7 @@ class enrolment extends external_api {
             'id' => $enrolinstance->id,
             'courseid' => $enrolinstance->courseid,
             'roleid' => $enrolinstance->roleid,
-            'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED
+            'enabled' => $enrolinstance->status == ENROL_INSTANCE_ENABLED,
         ];
     }
 

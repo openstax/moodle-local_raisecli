@@ -46,10 +46,10 @@ $services = [
             'local_raisecli_set_self_enrolment_method_key',
             'local_raisecli_get_user_uuids',
             'mod_quiz_get_quizzes_by_courses',
-            'mod_quiz_get_user_attempts'
-
-        ]
-    ]
+            'mod_quiz_get_user_attempts',
+            'local_raisecli_get_policy_acceptance_data',
+        ],
+    ],
 ];
 
 $functions = [
@@ -58,41 +58,48 @@ $functions = [
         'methodname' => 'enable_self_enrolment_method',
         'description' => 'Enable self enrolment method',
         'type' => 'write',
-        'capabilities' => 'enrol/self:config'
+        'capabilities' => 'enrol/self:config',
     ],
     'local_raisecli_get_quiz_attempt' => [
         'classname' => 'local_raisecli\external\quiz',
         'methodname' => 'get_quiz_attempt',
         'description' => 'Returns detailed information for the given finished attempt.',
         'type' => 'read',
-        'capabilities' => 'mod/quiz:viewreports'
+        'capabilities' => 'mod/quiz:viewreports',
     ],
     'local_raisecli_get_role_by_shortname' => [
         'classname' => 'local_raisecli\external\role',
         'methodname' => 'get_role_by_shortname',
         'description' => 'Get role information by shortname',
         'type' => 'read',
-        'capabilities' => 'moodle/role:manage'
+        'capabilities' => 'moodle/role:manage',
     ],
     'local_raisecli_get_self_enrolment_methods' => [
         'classname' => 'local_raisecli\external\enrolment',
         'methodname' => 'get_self_enrolment_methods',
         'description' => 'Return self-enrolment methods for a course and role',
         'type' => 'read',
-        'capabilities' => 'moodle/category:viewcourselist'
+        'capabilities' => 'moodle/category:viewcourselist',
     ],
     'local_raisecli_set_self_enrolment_method_key' => [
         'classname' => 'local_raisecli\external\enrolment',
         'methodname' => 'set_self_enrolment_method_key',
         'description' => 'Set key for self enrolment method',
         'type' => 'write',
-        'capabilities' => 'enrol/self:config'
+        'capabilities' => 'enrol/self:config',
     ],
     'local_raisecli_get_user_uuids' => [
         'classname' => 'local_raisecli\external\user',
         'methodname' => 'get_user_uuids',
         'description' => 'Get the uuids associated with a series of user ids',
         'type' => 'read',
-        'capabilities' => 'moodle/user:viewhiddendetails'
-    ]
+        'capabilities' => 'moodle/user:viewhiddendetails',
+    ],
+    'local_raisecli_get_policy_acceptance_data' => [
+        'classname' => 'local_raisecli\external\policy',
+        'methodname' => 'get_policy_acceptance_data',
+        'description' => 'Retrieve policy acceptance data for all users',
+        'type' => 'read',
+        'capabilities' => 'tool/policy:viewacceptances',
+    ],
 ];

@@ -13,10 +13,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 namespace local_raisecli\external;
 
 defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir . '/externallib.php');
+
 use external_api;
 use external_function_parameters;
 use external_multiple_structure;
@@ -24,28 +27,29 @@ use external_value;
 use external_single_structure;
 
 /**
- * RAISE CLI Web Service Function - User Attribute Access Functions
+ * RAISE CLI Web Service Function - Role Attribute Access Functions
  *
  * @package    local_raisecli
- * @copyright  2022 OpenStax
+ * @copyright  2023 OpenStax
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class user extends external_api {
-
+class policy extends external_api {
     /**
-     * Returns description of method parameters
+     * Describes the parameters for get_policy_acceptance_data.
+     *
      * @return external_function_parameters
      */
-    public static function get_user_uuids_parameters() {
+    public static function get_policy_acceptance_data_parameters() {
         return new external_function_parameters(
             [
+                'policyversionid' => new external_value(PARAM_INT, 'Policy version ID'),
                 'user_ids' => new external_multiple_structure(
                     new external_single_structure(
                         [
-                            'id' => new external_value(PARAM_INT, 'user id'),
+                            'id' => new external_value(PARAM_INT, 'User ID'),
                         ]
                     ),
-                    'User IDs requested',
+                    'Optional list of user IDs',
                     VALUE_DEFAULT,
                     []
                 ),
@@ -54,57 +58,58 @@ class user extends external_api {
     }
 
     /**
-     * Get the uuids associated with the given user ids.
-     * @param array $userids
-     * @return array list of objects with userids and uuids
-     * @throws moodle_exception
+     * Retrieve policy acceptance data for specified users and policy version
+     *
+     * @param int $policyversionid Policy version ID
+     * @param array $userids Optional list of user IDs
+     * @return array Policy acceptance data (userid, status) for specified users and policy version
      */
-    public static function get_user_uuids($userids) {
+    public static function get_policy_acceptance_data($policyversionid, $userids = []) {
         global $DB;
 
         $params = self::validate_parameters(
-            self::get_user_uuids_parameters(),
-            ['user_ids' => $userids]
+            self::get_policy_acceptance_data_parameters(),
+            ['policyversionid' => $policyversionid, 'user_ids' => $userids]
         );
 
         $context = \context_system::instance();
         self::validate_context($context);
-        require_capability('moodle/user:viewhiddendetails', $context);
+        require_capability('tool/policy:viewacceptances', $context);
 
-        if (count($userids) == 0) {
-            $rs = $DB->get_recordset('local_raise_user', [], '', 'user_id, user_uuid');
+        if (empty($userids)) {
+            $rs = $DB->get_recordset('tool_policy_acceptances', ['policyversionid' => $policyversionid], '', 'userid, status');
         } else {
             $selector = implode(", ", array_column($params['user_ids'], 'id'));
             $rs = $DB->get_recordset_select(
-                'local_raise_user',
-                "user_id IN ({$selector})"
+                'tool_policy_acceptances',
+                "policyversionid = :policyversionid AND userid IN ({$selector})",
+                ['policyversionid' => $params['policyversionid']]
             );
-        };
+        }
 
         $data = [];
-        if ($rs->valid()) {
-            foreach ($rs as $item) {
-                $data[] = [
-                    'user_id' => $item->user_id,
-                    'user_uuid' => $item->user_uuid,
-                ];
-            };
+        foreach ($rs as $record) {
+            $data[] = [
+                'user_id' => $record->userid,
+                'status' => $record->status,
+            ];
         }
+
         $rs->close();
         return $data;
     }
 
     /**
-     * Returns description of get_user_uuids() result value
+     * Returns description of get_policy_acceptance_data return values
      *
-     * @return external_description
+     * @return external_single_structure
      */
-    public static function get_user_uuids_returns() {
+    public static function get_policy_acceptance_data_returns() {
         return new external_multiple_structure(
             new external_single_structure(
                 [
-                    'user_id' => new external_value(PARAM_INT, 'user_id value'),
-                    'user_uuid' => new external_value(PARAM_TEXT, 'user uuid value'),
+                    "user_id" => new external_value(PARAM_INT, 'User ID'),
+                    "status" => new external_value(PARAM_TEXT, 'Policy acceptance status'),
                 ]
             )
         );
