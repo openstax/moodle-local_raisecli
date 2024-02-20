@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 namespace local_raisecli;
 
-use \local_raisecli\external\enrolment;
+use local_raisecli\external\enrolment;
 use externallib_advanced_testcase;
 
 defined('MOODLE_INTERNAL') || die();

@@ -39,7 +39,7 @@ class role extends external_api {
     public static function get_role_by_shortname_parameters() {
         return new external_function_parameters(
             [
-                'shortname' => new external_value(PARAM_ALPHANUM, 'Role shortname')
+                'shortname' => new external_value(PARAM_ALPHANUM, 'Role shortname'),
             ]
         );
     }
